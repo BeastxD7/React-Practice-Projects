@@ -4,14 +4,29 @@ import React, { useState } from 'react'
 const page = () => {
   const[title, settitle] = useState("")
   const[desc, setdesc] = useState("")
+  const[mainTask, setmainTask]= useState([]);
   const submitHandler = (e)=>{
     e.preventDefault()
-    console.log(title);
-    console.log(desc);
+    setmainTask([...mainTask, {title,desc}]);
     setdesc("")
     settitle ("")
   }
 
+  let renderTask = <h2 className='text-center font-bold'>No Task Available</h2>
+
+  if(mainTask.length>0) {
+  renderTask = mainTask.map((t,i)=>{
+    
+    return (
+      <li>
+      <div className='flex justify-between mb-5'>
+      <h5 className='text-2xl font-semibold pr-8'>{t.title}</h5>
+      <h6 className='text-xl font-semibold'>{t.desc}</h6>
+    </div>
+      </li>
+    )
+  })
+}
   return (
    <>
    <h1 className='bg-black text-white p-5 text-5xl font-bold text-center'>Beast's To Do List</h1>
@@ -24,6 +39,12 @@ const page = () => {
     }}/>
     <button className='bg-black border-2 font-bold text-white px-3 py-3 rounded-md'>Add Task</button>
    </form>
+   <hr/>
+   <div className='p-8 bg-slate-300 rounded-lg m-3'>
+    <ul>
+      {renderTask}
+    </ul>
+   </div>
    </>
   )
 }
