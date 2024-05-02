@@ -5,7 +5,7 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div className=' bg-zinc-800'>
+    <div className='bg-zinc-800'>
     <App />
     </div>
   </React.StrictMode>,
