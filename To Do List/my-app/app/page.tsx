@@ -1,43 +1,49 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, CheckCircle, Circle } from 'lucide-react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Plus, Trash2, CheckCircle, Circle } from 'lucide-react'
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
 
 export default function TodoApp() {
-  const [todos, setTodos] = useState(() => {
-    const savedTodos = localStorage.getItem('todos');
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const savedTodos = localStorage.getItem('todos')
     if (savedTodos) {
-      return JSON.parse(savedTodos);
+      return JSON.parse(savedTodos)
     }
-    return [];
-  });
-  const [input, setInput] = useState('');
+    return []
+  })
+  const [input, setInput] = useState('')
 
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
-  const addTodo = (e) => {
-    e.preventDefault();
+  const addTodo = (e: React.FormEvent) => {
+    e.preventDefault()
     if (input.trim() !== '') {
-      setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
-      setInput('');
+      setTodos([...todos, { id: Date.now(), text: input, completed: false }])
+      setInput('')
     }
-  };
+  }
 
-  const toggleTodo = (id) => {
+  const toggleTodo = (id: number) => {
     setTodos(todos.map(todo => 
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
-  };
+    ))
+  }
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
+  const deleteTodo = (id: number) => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center p-4">
@@ -97,5 +103,5 @@ export default function TodoApp() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }
